@@ -48,8 +48,11 @@ public class UserManagementRepository {
     }
 
     public void deleteUser(String userId) {
+        if (userId == null || userId.isBlank()) return;
+
         List<RegularUser> users = readAllUsers();
-        users.removeIf(user -> user.getId().equals(userId));
+        boolean removed = users.removeIf(user -> user.getId().trim().equals(userId.trim()));
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (RegularUser user : users) {
                 writer.write(String.join(",", user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), user.getMembershipType()));
@@ -57,6 +60,10 @@ public class UserManagementRepository {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        if (!removed) {
+            System.out.println("User with ID " + userId + " not found.");
         }
     }
 
