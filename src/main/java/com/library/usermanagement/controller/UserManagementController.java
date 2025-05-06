@@ -29,7 +29,7 @@ public class UserManagementController {
     }
 
     // Show Login Form
-    @GetMapping("/login")
+    @GetMapping("")
     public String showLoginForm(Model model) {
         model.addAttribute("user", new RegularUser());
         return "usermanagement/login";
@@ -58,12 +58,15 @@ public class UserManagementController {
     // View Single User by ID
     @GetMapping("/{id}")
     public String viewUser(@PathVariable String id, Model model) {
-        RegularUser user = service.findById(id);
+        RegularUser user = service.findById(id.trim());
         if (user != null) {
             model.addAttribute("user", user);
             return "usermanagement/profile";
+        } else {
+            model.addAttribute("error", "User not found with ID: " + id);
+            model.addAttribute("users", service.getAllUsers());
+            return "usermanagement/list";
         }
-        return "redirect:/users/list";
     }
 
     // Show Update Form
