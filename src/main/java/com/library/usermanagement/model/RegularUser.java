@@ -1,21 +1,24 @@
 package com.library.usermanagement.model;
 
 public class RegularUser extends User {
-    private String membershipType;
-
-    public RegularUser(String id, String username, String email, String password, String membershipType) {
-        super(id, username, email, password);
-        this.membershipType = membershipType;
-    }
+    private UserType userType;
 
     public RegularUser() {
-
+        super();
+        this.userType = UserType.AUDIENCE;  // default
     }
 
-    public String getMembershipType() {
-        return membershipType;
+    public RegularUser(String id, String username, String email, String password, String userTypeStr) {
+        super(id, username, email, password);
+        this.userType = UserType.valueOf(userTypeStr);
     }
-    public void setMembershipType(String membershipType) {
-        this.membershipType = membershipType;
+
+    public UserType getUserType() {
+        return userType;
     }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
 }
