@@ -60,12 +60,12 @@
             <label class="form-label">User Type</label>
             <select name="userType"
                     class="form-select user-management-input">
-              <option th:value="USER"
-                      th:selected="${user.membershipType.name() == 'USER'}">
-                User
+              <option th:value="AUDIENCE"
+                      th:selected="${user.userType.name() == 'AUDIENCE'}">
+                Audience
               </option>
               <option th:value="ADMIN"
-                      th:selected="${user.membershipType.name() == 'ADMIN'}">
+                      th:selected="${user.userType.name() == 'ADMIN'}">
                 Admin
               </option>
             </select>
