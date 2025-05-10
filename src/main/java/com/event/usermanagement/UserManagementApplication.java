@@ -1,12 +1,13 @@
-package com.library;
+package com.event.usermanagement;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class OnlineLibraryManagementApplication {
+public class UserManagementApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(OnlineLibraryManagementApplication.class, args);
+        SpringApplication.run(UserManagementApplication.class, args);
     }
+
 }

@@ -1,7 +1,7 @@
-package com.library.usermanagement.repository;
+package com.event.usermanagement.repository;
 
-import com.library.usermanagement.exception.DataAccessException;
-import com.library.usermanagement.model.RegularUser;
+import com.event.usermanagement.exception.DataAccessException;
+import com.event.usermanagement.model.RegularUser;
 
 import java.io.*;
 import java.util.*;

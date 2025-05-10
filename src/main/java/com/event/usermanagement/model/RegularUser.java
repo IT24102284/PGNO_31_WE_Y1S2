@@ -1,4 +1,4 @@
-package com.library.usermanagement.model;
+package com.event.usermanagement.model;
 
 public class RegularUser extends User {
     private UserType userType;

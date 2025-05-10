@@ -1,4 +1,4 @@
-package com.library.usermanagement.model;
+package com.event.usermanagement.model;
 
 public enum UserType {
     AUDIENCE,
