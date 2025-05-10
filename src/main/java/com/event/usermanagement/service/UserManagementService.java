@@ -1,9 +1,9 @@
-package com.library.usermanagement.service;
+package com.event.usermanagement.service;
 
-import com.library.usermanagement.exception.*;
-import com.library.usermanagement.model.UserType;
-import com.library.usermanagement.model.RegularUser;
-import com.library.usermanagement.repository.UserManagementRepository;
+import com.event.usermanagement.exception.*;
+import com.event.usermanagement.model.UserType;
+import com.event.usermanagement.model.RegularUser;
+import com.event.usermanagement.repository.UserManagementRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

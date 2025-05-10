@@ -1,4 +1,4 @@
-package com.library.usermanagement.exception;
+package com.event.usermanagement.exception;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException(String idOrUsername) {

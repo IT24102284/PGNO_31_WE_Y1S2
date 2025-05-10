@@ -1,11 +1,11 @@
-package com.library.usermanagement.controller;
+package com.event.usermanagement.controller;
 
-import com.library.usermanagement.exception.DataAccessException;
-import com.library.usermanagement.exception.DuplicateEmailException;
-import com.library.usermanagement.exception.DuplicateUsernameException;
-import com.library.usermanagement.exception.UserNotFoundException;
-import com.library.usermanagement.model.RegularUser;
-import com.library.usermanagement.service.UserManagementService;
+import com.event.usermanagement.exception.DataAccessException;
+import com.event.usermanagement.exception.DuplicateEmailException;
+import com.event.usermanagement.exception.DuplicateUsernameException;
+import com.event.usermanagement.exception.UserNotFoundException;
+import com.event.usermanagement.model.RegularUser;
+import com.event.usermanagement.service.UserManagementService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

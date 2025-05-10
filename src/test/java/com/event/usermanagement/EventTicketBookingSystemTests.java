@@ -1,10 +1,10 @@
-package com.library.usermanagement;
+package com.event.usermanagement;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class OnlineLibraryManagementApplicationTests {
+class EventTicketBookingSystemTests {
 
     @Test
     void contextLoads() {

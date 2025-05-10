@@ -1,4 +1,4 @@
-package com.library.usermanagement.model;
+package com.event.usermanagement.model;
 
 public abstract class User {
     private String id;
