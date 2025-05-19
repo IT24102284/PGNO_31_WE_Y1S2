@@ -1,0 +1,200 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Feedback System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .sort-button {
+            background-color: #007bff;
+            margin-bottom: 10px;
+        }
+        .sort-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Event Feedback System</h1>
+    <div class="form-container">
+        <form id="feedbackForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="rating">Rating (1-5):</label>
+            <select id="rating" name="rating" required>
+                <option value="1">1 Star</option>
+                <option value="2">2 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="5">5 Stars</option>
+            </select>
+            
+            <label for="comment">Comment:</label>
+            <textarea id="comment" name="comment" rows="4" required></textarea>
+            
+            <button type="submit">Submit Feedback</button>
+        </form>
+    </div>
+    
+    <button class="sort-button" onclick="loadFeedback(true)">Sort Feedback by Rating</button>
+    
+    <table id="feedbackTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Rating</th>
+                <th>Comment</th>
+            </tr>
+        </thead>
+        <tbody id="feedbackTableBody"></tbody>
+    </table>
+
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const rating = document.getElementById('rating').value;
+            const comment = document.getElementById('comment').value;
+
+            const response = await fetch('http://localhost:8080/api/feedback', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `name=${encodeURIComponent(name)}&rating=${rating}&comment=${encodeURIComponent(comment)}`
+            });
+
+            if (response.ok) {
+                alert('Feedback submitted successfully!');
+                document.getElementById('feedbackForm').reset();
+                loadFeedback();
+            } else {
+                alert('Error submitting feedback. Please try again.');
+            }
+        });
+
+        async function loadFeedback(sorted = false) {
+            const url = sorted ? 'http://localhost:8080/api/feedback/sorted' : 'http://localhost:8080/api/feedback/all';
+            const response = await fetch(url);
+            const feedbackList = await response.json();
+
+            const tableBody = document.getElementById('feedbackTableBody');
+            tableBody.innerHTML = '';
+
+            feedbackList.forEach(feedback => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${feedback.name}</td>
+                    <td>${feedback.rating} Star${feedback.rating > 1 ? 's' : ''}</td>
+                    <td>${feedback.comment}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Load feedback on page load
+        loadFeedback();
+    </script>
+</body>
+</html>
