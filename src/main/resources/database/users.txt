@@ -1,3 +1,2 @@
 734a5352-6fff-4351-825f-0931a42ce544,Mathu,mathu06@gmail.com,$2a$10$MltPg21/VTnxzXe6h0LKOuPtivH3qhv3c2Rlw/8YVmN6xAhRS6JwK,AUDIENCE
-87d79841-d1b7-4b89-94a7-a8c1a3b618c1,Shayan,shayan06@gmail.com,$2a$10$aJZbKm5wQXFk0oGuMgRDi.sEohV4QTEd3LETU/8.a5H3UGYltLQ26,AUDIENCE
 e230b701-ae11-474a-b7cd-4dd8ed087a69,shayanz,mathu77@gmail.com,$2a$10$Xvojyg2IIw.rzYLXsUvuZeiN7ImZ/49iHQr/AxJtiJ6MWsesvOW8a,AUDIENCE
