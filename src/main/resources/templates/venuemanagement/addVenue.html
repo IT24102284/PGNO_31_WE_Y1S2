@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Venue Management</title>
+</head>
+<body>
+<h1>Venues</h1>
+<a href="/addVenue">Add New Venue</a>
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th>ID</th><th>Name</th><th>Location</th><th>Capacity</th><th>Actions</th>
+    </tr>
+    <tr th:each="venue : ${venues}">
+        <td th:text="${venue.id}"></td>
+        <td th:text="${venue.name}"></td>
+        <td th:text="${venue.location}"></td>
+        <td th:text="${venue.capacity}"></td>
+        <td>
+            <a th:href="@{'/editVenue/' + ${venue.id}}">Edit</a> |
+            <a th:href="@{'/deleteVenue/' + ${venue.id}}"
+               onclick="return confirm('Are you sure?');">Delete</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
