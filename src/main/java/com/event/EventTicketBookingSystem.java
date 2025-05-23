@@ -9,4 +9,5 @@ public class EventTicketBookingSystem {
     public static void main(String[] args) {
         SpringApplication.run(EventTicketBookingSystem.class, args);
     }
+
 }
