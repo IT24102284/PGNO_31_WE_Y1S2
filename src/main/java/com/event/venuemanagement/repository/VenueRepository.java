@@ -1,7 +1,6 @@
 package com.event.venuemanagement.repository;
 
 import com.event.venuemanagement.model.Venue;
-import com.event.venuemanagement.model.Venue;
 
 import java.io.*;
 import java.util.*;
