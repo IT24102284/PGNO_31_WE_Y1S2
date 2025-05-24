@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Venue List</title>
-    <!-- Bootstrap 5 CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -95,7 +94,7 @@
 <div class="list-card">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Venue List</h2>
-        <a th:href="@{/venues/add}" class="btn btn-primary">Add New Venue</a>
+        <a th:href="@{/add-venue}" class="btn btn-primary">Add New Venue</a>
     </div>
 
     <div class="table-responsive">
@@ -121,8 +120,8 @@
                 <td th:text="${venue.capacity}">300</td>
                 <td th:text="${venue.facilities}">WiFi, Parking</td>
                 <td>
-                    <a th:href="@{'/venues/edit/' + ${venue.id}}" class="btn btn-sm btn-warning me-2">Edit</a>
-                    <a th:href="@{'/venues/delete/' + ${venue.id}}" class="btn btn-sm btn-danger"
+                    <a th:href="@{'/edit-venue/' + ${venue.id}}" class="btn btn-sm btn-warning me-2">Edit</a>
+                    <a th:href="@{'/delete-venue/' + ${venue.id}}" class="btn btn-sm btn-danger"
                        onclick="return confirm('Delete this venue?');">Delete</a>
                 </td>
             </tr>

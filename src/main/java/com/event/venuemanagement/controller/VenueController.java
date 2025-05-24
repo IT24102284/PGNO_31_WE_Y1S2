@@ -8,56 +8,50 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/venues")  // Base path for all venue URLs
 public class VenueController {
 
     @Autowired
     private VenueService venueService;
 
+    // Displays the list of all venues (homepage)
     @GetMapping("/")
-    public String redirectToVenues() {
-        return "redirect:/venues";
-    }
-
-    // 1. List all venues - URL: /venues
-    @GetMapping("")
     public String viewHomePage(Model model) {
         model.addAttribute("venues", venueService.getAllVenues());
-        return "index";  // your Thymeleaf template for listing venues
+        return "index"; // Renders index.html
     }
 
-    // 2. Show add venue form - URL: /venues/add
-    @GetMapping("/add")
+    // Displays the form to add a new venue
+    @GetMapping("/add-venue")
     public String showAddVenueForm(Model model) {
-        model.addAttribute("venue", new Venue());  // fix attribute name to "venue"
-        return "addVenue";
+        model.addAttribute("venue", new Venue()); // Add an empty Venue object for the form
+        return "addVenue"; // Renders addVenue.html
     }
 
-    // 3. Save new venue - URL: /venues/save
-    @PostMapping("/save")
+    // Handles the submission of the new venue form
+    @PostMapping("/save-venue")
     public String saveVenue(@ModelAttribute("venue") Venue venue) {
         venueService.addVenue(venue);
-        return "redirect:/venues";
+        return "redirect:/"; // Redirects to the homepage after saving
     }
 
-    // 4. Show edit venue form - URL: /venues/edit/{id}
-    @GetMapping("/edit/{id}")
+    // Displays the form to edit an existing venue
+    @GetMapping("/edit-venue/{id}")
     public String showEditVenueForm(@PathVariable int id, Model model) {
         venueService.getVenueById(id).ifPresent(venue -> model.addAttribute("venue", venue));
-        return "editVenue";
+        return "editVenue"; // Renders editVenue.html
     }
 
-    // 5. Update venue - URL: /venues/update
-    @PostMapping("/update")
+    // Handles the submission of the edited venue form
+    @PostMapping("/update-venue")
     public String updateVenue(@ModelAttribute("venue") Venue venue) {
         venueService.updateVenue(venue);
-        return "redirect:/venues";
+        return "redirect:/"; // Redirects to the homepage after updating
     }
 
-    // 6. Delete venue - URL: /venues/delete/{id}
-    @GetMapping("/delete/{id}")
+    // Handles the deletion of a venue
+    @GetMapping("/delete-venue/{id}")
     public String deleteVenue(@PathVariable int id) {
         venueService.deleteVenue(id);
-        return "redirect:/venues";
+        return "redirect:/"; // Redirects to the homepage after deleting
     }
 }
