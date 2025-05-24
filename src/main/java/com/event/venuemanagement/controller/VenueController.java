@@ -14,6 +14,11 @@ public class VenueController {
     @Autowired
     private VenueService venueService;
 
+    @GetMapping("/")
+    public String redirectToVenues() {
+        return "redirect:/venues";
+    }
+
     // 1. List all venues - URL: /venues
     @GetMapping("")
     public String viewHomePage(Model model) {
